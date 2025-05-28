@@ -31,9 +31,9 @@ services:
 
   user-service:
     build:
-      context: userService
+      context: user_service
       dockerfile: Dockerfile
-    container_name: userService
+    container_name: user_service
     ports:
       - "8080:8080"
     environment:
@@ -48,9 +48,9 @@ services:
 
   note-backend:
     build:
-      context: noteBackend
+      context: note_service
       dockerfile: Dockerfile
-    container_name: noteBackend
+    container_name: note_service
     ports:
       - "8080:8080"
     restart: unless-stopped

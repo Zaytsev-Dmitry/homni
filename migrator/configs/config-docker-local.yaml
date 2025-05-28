@@ -4,7 +4,7 @@ databases:
   - name: "user_service_db"
     user: "user_service_user"
     password: "8c6b18ac-84ff-4436-8916-6e11aaa41e92"
-    directoryName: "userService"
+    directoryName: "user_service"
 
   - name: "notes"
     user: "notes_user"
@@ -19,4 +19,4 @@ databases:
   - name: "expensia_db"
     user: "expensia_user"
     password: "4a3cac82-eeb2-4b5e-b05f-8c3a5d608c82"
-    directoryName: "expensia"
+    directoryName: "expensia_service"

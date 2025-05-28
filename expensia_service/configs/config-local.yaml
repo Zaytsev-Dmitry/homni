@@ -7,5 +7,5 @@ database:
   port: "5432"
 
 server:
-  name: "expensia backend server"
+  name: "expensia_service backend server"
   port: 8085

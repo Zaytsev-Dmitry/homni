@@ -4,19 +4,19 @@
 
 ## 📦 Сервисы
 
-### 🔧 `botCoreService`
+### 🔧 `bot_service`
 Бэкенд-ядро Telegram-бота. Принимает команды пользователей, маршрутизирует запросы по микросервисам, обеспечивает логику взаимодействия с платформой Telegram.
 
-### 💸 `expensia`
+### 💸 `expensia_service`
 Микросервис для учёта **личных и совместных расходов**. Позволяет добавлять траты, распределять их между участниками и анализировать финансы.
 
 ### 🧳 `migrator`
 Сервис для **миграции базы данных**. Поддерживает управление схемами и версионирование для всех микросервисов системы.
 
-### 📝 `noteBackend`
+### 📝 `note_service`
 Функциональность **заметок**: создание, хранение и редактирование личных и общих записей.
 
-### 👤 `userService`
+### 👤 `user_service`
 Сервис управления **пользователями**: регистрация, аутентификация, авторизация и хранение пользовательских данных.
 
 ---
@@ -40,8 +40,8 @@ IN PROGRESS
 ## 📌 Установка и запуск
  - Генерация openapi сущностей
     ```bash
-    oapi-codegen -package=rest -generate "types,spec,gin" userService/api/http/user-service-api.yml > userService/api/http/user-service-api.gen.go
-    oapi-codegen -package=openapi -generate "types,spec,gin" expensia/api/openapi/expensia-service-api.yml > expensia/api/openapi/expensia-service-api.gen.go
+    oapi-codegen -package=rest -generate "types,spec,gin" user_service/api/http/user-service-api.yml > user_service/api/http/user-service-api.gen.go
+    oapi-codegen -package=openapi -generate "types,spec,gin" expensia_service/api/openapi/expensia_service-service-api.yml > expensia_service/api/openapi/expensia_service-service-api.gen.go
    ```
    
 IN PROGRESS

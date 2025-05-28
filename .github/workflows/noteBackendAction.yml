@@ -4,7 +4,7 @@ on:
   push:
     branches: ["master","dev"]
     paths:
-      - 'noteBackend/**'
+      - '../../note_service/**'
   workflow_dispatch:
 
 env:

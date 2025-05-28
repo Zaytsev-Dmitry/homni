@@ -4,7 +4,7 @@ on:
   push:
     branches: ["master","dev"]
     paths:
-      - '../../userService/**'
+      - '../../user_service/**'
 
 env:
   REPO_URL: '${{ secrets.AUTH_BACKEND_PROD_DOCKERHUB_REPO }}'
