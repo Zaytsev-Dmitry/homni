@@ -13,8 +13,6 @@ paths:
         - User-Identity-Service
       operationId: registerAccount
       description: 'Зарегистрировать аккаунт'
-      parameters:
-        - $ref: '#/components/parameters/tgUserIdHeader'
       requestBody:
         content:
           application/json:

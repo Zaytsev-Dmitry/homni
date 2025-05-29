@@ -94,11 +94,6 @@ type N409 = BackendErrorResponse
 // N500 defines model for 500.
 type N500 = BackendErrorResponse
 
-// RegisterAccountParams defines parameters for RegisterAccount.
-type RegisterAccountParams struct {
-	TgUserId int64 `json:"tgUserId"`
-}
-
 // RegisterAccountJSONRequestBody defines body for RegisterAccount for application/json ContentType.
 type RegisterAccountJSONRequestBody = CreateAccountRequest
 
@@ -109,7 +104,7 @@ type ServerInterface interface {
 	GetAccountByTgId(c *gin.Context, telegramId int64)
 
 	// (POST /identity/user/register)
-	RegisterAccount(c *gin.Context, params RegisterAccountParams)
+	RegisterAccount(c *gin.Context)
 
 	// (GET /profile/{telegramId})
 	GetProfileByTgId(c *gin.Context, telegramId int64)
@@ -151,36 +146,7 @@ func (siw *ServerInterfaceWrapper) GetAccountByTgId(c *gin.Context) {
 // RegisterAccount operation middleware
 func (siw *ServerInterfaceWrapper) RegisterAccount(c *gin.Context) {
 
-	var err error
-
 	c.Set(Bearer_keyScopes, []string{})
-
-	// Parameter object where we will unmarshal all parameters from the context
-	var params RegisterAccountParams
-
-	headers := c.Request.Header
-
-	// ------------- Required header parameter "tgUserId" -------------
-	if valueList, found := headers[http.CanonicalHeaderKey("tgUserId")]; found {
-		var TgUserId int64
-		n := len(valueList)
-		if n != 1 {
-			siw.ErrorHandler(c, fmt.Errorf("Expected one value for tgUserId, got %d", n), http.StatusBadRequest)
-			return
-		}
-
-		err = runtime.BindStyledParameterWithLocation("simple", false, "tgUserId", runtime.ParamLocationHeader, valueList[0], &TgUserId)
-		if err != nil {
-			siw.ErrorHandler(c, fmt.Errorf("Invalid format for parameter tgUserId: %w", err), http.StatusBadRequest)
-			return
-		}
-
-		params.TgUserId = TgUserId
-
-	} else {
-		siw.ErrorHandler(c, fmt.Errorf("Header parameter tgUserId is required, but not found"), http.StatusBadRequest)
-		return
-	}
 
 	for _, middleware := range siw.HandlerMiddlewares {
 		middleware(c)
@@ -189,7 +155,7 @@ func (siw *ServerInterfaceWrapper) RegisterAccount(c *gin.Context) {
 		}
 	}
 
-	siw.Handler.RegisterAccount(c, params)
+	siw.Handler.RegisterAccount(c)
 }
 
 // GetProfileByTgId operation middleware
@@ -251,22 +217,22 @@ func RegisterHandlersWithOptions(router gin.IRouter, si ServerInterface, options
 // Base64 encoded, gzipped, json marshaled Swagger object
 var swaggerSpec = []string{
 
-	"H4sIAAAAAAAC/9xX3W4bRRR+FevA5SZrg0HN3sVpCwYRV/kRElWEprvH62l3Z5aZcSXLshRSJG4qcckl",
-	"r2CBKkIjyivMvhE6s7Oxgzc4KSGtchV75vjM9835zjcnU4hlXkiBwmiIpqBQF1JodF+67Tb9iaUwKAx9",
-	"ZEWR8ZgZLkX4VEtBazoeYc7o04cKhxDBB+EiZ1jt6rDH4mcokgdKSbXnD4HZbBZAgjpWvKCcEEGPJS2F",
-	"341RG5gF0G13bh3C4e724cHng73+Nw/uVxi6t45hd3Dw7cPB4a4HsHXrAHakGGY8dkX45B3ooC8MKsGy",
-	"1j6q56ha7gdAcT4THdSYLJpCoWSByvBKxhcST8FMCoQItFFcpEQP6ec7MsGlXS4MpqhoO0ezltVXaNh9",
-	"ZpgD6FPIJ0+xur8e0zz2WG8W5mL3v6PcUcgMbsexHAuz51twBSXmjGeNCAxmmCqWH2pU/YRChlLlzFS3",
-	"+WkXgobLHWuqct7EqQnjOYMVXAUzo2ZYPEdtWF5c8YhHSg55hpfXiVU3dGWK/KqBSmbNtb3mJe1zkWbo",
-	"eTTIjmXZYAjR43WN2iDaWbB675NMsmSd9P55qw3Aj86hVwpCYbiZvCf4lyGtI9EY+/820ioQMkqMx4qb",
-	"yT5xqA59gkyh2niGk8W3h3XyL74+AG+vlKnaXRw2MqaonJqLoXTIuSHFOsLOp3mMre1HfQjgOSpdGXln",
-	"s73ZJlqyQMEKDhF8vNne7EDgetbBCn1PhdOaez+Z0UaKZsUawf5i39iz8kX5oz0tT8qXLfuXW3hpf7dv",
-	"7K92Xp7YV/as/MlttEza4gm485V7sehO4TM03up6k4O0nzg4iuVoUGknLk5nOVsJoOo+WKCDAGhK4QoT",
-	"iIwaY7D0/q0v11FwcdL66AZf2PU91PDcDr6sBo32ZdnP4YYUtJjM1sV2liaodbHdpWHj32MpyImepVQs",
-	"8KWEI1oMuecdknGGClOuDSrXglI3CepnOy+P7Sv7mz0tvy9PymN7Wh7XWiKBze1r+9rOyxf2z/JkRUt7",
-	"/oQaRbOURsgS10+1mFLf4DcgJfdY92QyuTEVNU4DM6ec91O511Hj1lVit66txtpwXc2XrfbxEZWpFisR",
-	"3KgZbnjf9NItqnfyrY2QZFv+YOf2D3v2tr5YTw530hcvGYvuniV6oqQrJ036L6oq4EWamYxZBgGMVeYf",
-	"+SgM3eJIahPda9/r0FjzdwAAAP//SFM3eikQAAA=",
+	"H4sIAAAAAAAC/9xX3W4bRRR+FevA5SZrg0HN3sVpCwYRV/kRElWEprvHm2l3Z5aZcSXLshRSJG4qcckl",
+	"r2CBKkIjyivMvhE6s+PYwRvWKSGtchV75vjM9835zjcnE4hlXkiBwmiIJqBQF1JodF+67Tb9iaUwKAx9",
+	"ZEWR8ZgZLkX4VEtBazo+xpzRpw8VDiGCD8JFzrDa1WGPxc9QJA+UkmrPHwLT6TSABHWseEE5IYIeS1oK",
+	"vxuhNjANoNvu3DqEw93tw4PPB3v9bx7crzB0bx3D7uDg24eDw10PYOvWAexIMcx47IrwyTvQQV8YVIJl",
+	"rX1Uz1G13A+A4nwmOqg2WTSBQskCleGVjC8lnoAZFwgRaKO4SIke0s93ZIJLu1wYTFHRdo6mkdVXaNh9",
+	"ZpgD6FPIJ0+xur8e0zz2WG8W5mL3v6PcUcgMbsexHAmz51twBSXmjGe1CAxmmCqWH2pU/YRChlLlzFS3",
+	"+WkXgprLHWmqcl7HqQ7jBYMVXAUzx/WweI7asLxY84hHSg55hlfXiVU3tDZFvm6gkll9ba95SftcpBl6",
+	"HjWyY1k2GEL0uKlRa0Q7DVbvfZxJljRJ75+3WgP86AJ6pSAUhpvxe4J/GVITidrY/7eRVoGQUWI8UtyM",
+	"94lDdegTZArVxjMcL749nCf/4usD8PZKmardxWHHxhSVU3MxlA45N6RYR9j5NI+xtf2oDwE8R6UrI+9s",
+	"tjfbREsWKFjBIYKPN9ubHQhczzpYoe+pcDLn3k+mtJGiWbFGsL/YN/a8fFH+aM/K0/Jly/7lFl7a3+0b",
+	"+6udlaf2lT0vf3IbLZO2eALufOVeLLpT+AyNt7re+CDtJw6OYjkaVNqJi9NZzlYCqLoPFuggAJpSuMIE",
+	"IqNGGCy9f83lOgouT1of3eAL29xDNc/t4Mtq0Ghflf0CbkhBi8msKbazNEE1xXaXho1/j6UgJ3qWUrHA",
+	"lxKOaDHknndIxhkqTLk2qFwLSl0nqJ/trDyxr+xv9qz8vjwtT+xZeTLXEglsZl/b13ZWvrB/lqcrWtrz",
+	"J8xRVNpAbXoyGd9YXWvf56mr5fuppevoY2ud2K1r62Nuga6hl83v8RH14Fw+RHBjznDDO5kXU1G9XG9t",
+	"TSSk8gc7s3/Y87d1qvlbfied6opB5e6ZlCdKunLSpP9rqgJeppnJmGUQwEhl/tmNwtAtHkttonvtex0a",
+	"NP4OAAD//w3y7HK7DwAA",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file

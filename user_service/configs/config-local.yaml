@@ -6,9 +6,9 @@ keycloak:
 
 database:
   host: "localhost"
-  userName: "user_service_user"
+  userName: "user_service"
   password: "8c6b18ac-84ff-4436-8916-6e11aaa41e92"
-  dataBaseName: "user_service_db"
+  dataBaseName: "user_service"
   dialect: "postgres"
   port: "5432"
 

@@ -4,7 +4,7 @@ import (
 	apikitHandler "github.com/Zaytsev-Dmitry/apikit/handlers"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	generatedApi "userService/api/http"
+	"userService/api/http"
 	"userService/internal/app/domain"
 	"userService/internal/app/ports/in/delegate"
 	daoImpl "userService/internal/app/ports/out/dao"
@@ -18,7 +18,7 @@ type IdentityUserController struct {
 }
 
 func (cntr *IdentityUserController) RegisterAccount(context *gin.Context) {
-	var req generatedApi.CreateAccountRequest
+	var req http.CreateAccountRequest
 	if err := apikitHandler.HandleMarshalling(context, &req); err != nil {
 		return
 	}
