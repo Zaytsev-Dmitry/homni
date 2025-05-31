@@ -29,6 +29,22 @@ services:
     networks:
       - skynet
 
+  expensia-service:
+    build:
+      context: expensia_service
+      dockerfile: Dockerfile
+    container_name: expensia_service
+    ports:
+      - "8085:8085"
+    environment:
+      CONFIG_PATH: /app/configs/config-docker.yaml
+      APP_PROFILE: docker-local
+    restart: unless-stopped
+    depends_on:
+      - postgres_server
+    networks:
+      - skynet
+
   user-service:
     build:
       context: user_service

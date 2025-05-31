@@ -14,7 +14,7 @@ func Load(r *gin.Engine) {
 
 	r.SetHTMLTemplate(templ)
 	r.StaticFS("/public", http.Dir("third_party/swagger_ui"))
-	r.StaticFile("/openapi/expensia_service-service-api.yml", "api/openapi/expensia_service-service-api.yml")
+	r.StaticFile("/openapi/expensia-service-api.yml", "api/openapi/expensia-service-api.yml")
 
 	r.GET("/docs", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl", gin.H{

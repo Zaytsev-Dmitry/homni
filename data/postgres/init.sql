@@ -6,14 +6,14 @@ create database notes;
 CREATE USER notes_user WITH LOGIN PASSWORD '5fea3e86-29b6-4f85-a5ed-3117d7ff7c7f';
 GRANT ALL PRIVILEGES ON DATABASE notes TO notes_user;
 
--- create database keycloak;
--- CREATE USER keycloak_user WITH LOGIN PASSWORD '32f21777-78c6-49bb-a5fe-b3ebeb325593';
--- GRANT ALL PRIVILEGES ON DATABASE keycloak TO keycloak_user;
+create database keycloak;
+CREATE USER keycloak_user WITH LOGIN PASSWORD '32f21777-78c6-49bb-a5fe-b3ebeb325593';
+GRANT ALL PRIVILEGES ON DATABASE keycloak TO keycloak_user;
 
--- create database bot_service;
--- CREATE USER bot_service_user WITH LOGIN PASSWORD '9876c88e-94a6-45c0-8e88-161d7519bf12';
--- GRANT ALL PRIVILEGES ON DATABASE bot_service TO bot_service_user;
+create database bot_service;
+CREATE USER bot_service_user WITH LOGIN PASSWORD '9876c88e-94a6-45c0-8e88-161d7519bf12';
+GRANT ALL PRIVILEGES ON DATABASE bot_service TO bot_service_user;
 
--- create database expensia_service;
--- CREATE USER expensia_user WITH LOGIN PASSWORD '4a3cac82-eeb2-4b5e-b05f-8c3a5d608c82';
--- GRANT ALL PRIVILEGES ON DATABASE expensia_service TO expensia_user;
+create database expensia_service;
+CREATE USER expensia_user WITH LOGIN PASSWORD '4a3cac82-eeb2-4b5e-b05f-8c3a5d608c82';
+GRANT ALL PRIVILEGES ON DATABASE expensia_service TO expensia_user;
